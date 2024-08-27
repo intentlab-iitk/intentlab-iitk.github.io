@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="INTENT Lab is an intelligence-based networking development laboratory of Electrical Department at IIT Kanpur.">
@@ -14,7 +14,7 @@
     <title>INTENT Labs</title>
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/login.css">
+    <link rel="stylesheet" href="styles/index.css">
 </head>
 
 <body>
@@ -22,16 +22,38 @@
     <header id="myHeader">
         <nav id=navbar>
             <div id="navAnchorBox">
-                <a href="index.html">Home</a>
+                <a href="#home">Home</a>
+                <a href="#research">Research</a>
+                <a href="#people">People</a>
+                <a href="#contact">Contact</a>
+                <a> <span></span></a>
+                <a href="login.php">Login</a>
             </div>
+            <button class="menuBtn" onclick="toggleMenu(true)">
+                <span></span>
+                <span></span>
+            </button>
         </nav>
     </header>
 
+    <main id="main-page" class="main">
 
-    <main class="main">
         <div id="particles-js" class="particles"></div>
+
         <section id="home">
-            <h1>login</h1>
+            <h1>home</h1>
+        </section>
+
+        <section id="research">
+            <h1>research</h1>
+        </section>
+
+        <section id="people">
+            <h1>people</h1>
+        </section>
+
+        <section id="contact">
+            <h1>contact</h1>
         </section>
     </main>
 
@@ -44,9 +66,11 @@
                 <li><a href="#">Contact</a></li>
             </ul>
         </div>
-        <script src="scripts/particles.js"></script>
-        <script src="scripts/login.js"></script>
     </footer>
+
+    <script src="scripts/particles.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/index.js"></script>
 
 </body>
 

@@ -1,3 +1,21 @@
-footer {
-    display: fixed;
+#navAnchorBox a {
+    color: #fff;
+}
+
+@media (max-width: 640px) {
+
+    /* Responsive Header */
+    #navAnchorBox {
+        display: flex;
+        flex-direction: row;
+    }
+
+    section h1 {
+        font-size: 60px;
+    }
+
+    /* Responsive Footer */
+    .footer-content p {
+        font-size: 14px;
+    }
 }
