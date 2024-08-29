@@ -1,5 +1,5 @@
 User-agent: *
-Disallow: /includes/
 Disallow: /assets/
-Disallow: /css/
-Disallow: /js/
+Disallow: /scripts/
+Disallow: /styles/
+Disallow: /php/

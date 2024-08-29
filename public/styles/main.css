@@ -48,6 +48,30 @@ section h1 {
   z-index: 2;
 }
 
+
+/* START: Button */
+
+.custom-btn {
+  /* flex: 1; */
+  min-width: 180px;
+  max-height: 60px;
+  text-align: center;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #2575fc;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+  background-color: #08aaef;
+
+}
+
+
 /* Header */
 header {
   z-index: 9999;
