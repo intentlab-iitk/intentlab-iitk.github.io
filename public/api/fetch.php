@@ -1,14 +1,14 @@
 <?php
 // Include the configuration files
-if (file_exists('config.local.creds.php')) {
-    require 'config.local.creds.php'; // Use Local credentials, not tracked by Git
+if (file_exists('config.creds.php')) {
+    require 'config.creds.php'; // Use Local credentials, not tracked by Git
 } else {
-    require 'config.creds.php'; // Use Repo credential, tracked by Git
+    require 'config.php'; // Use Repo credential, tracked by Git
 }
-if (file_exists('database.local.creds.php')) {
-    require 'database.local.creds.php'; // Use Local credentials, not tracked by Git
+if (file_exists('database.creds.php')) {
+    require 'database.creds.php'; // Use Local credentials, not tracked by Git
 } else {
-    require 'database.creds.php'; //  Use Repo credential, tracked by Git
+    require 'database.php'; //  Use Repo credential, tracked by Git
 }
 
 // Create a connection to the database
@@ -49,9 +49,11 @@ if ($result->num_rows > 0) {
 
         // Now Fetch the PCs Data
         $sql = $conn->prepare("
-            SELECT pc_name, ip_address, update_time 
+            SELECT pc_name, ip_address, update_time
             FROM $ipTable 
-            ORDER BY update_time DESC");
+            ORDER BY update_time DESC
+        ");
+        $sql->execute();
         $sql->execute();
         $result = $sql->get_result();
 

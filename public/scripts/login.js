@@ -36,17 +36,21 @@ function showNotification(message, delay) {
 }
 
 // Function to display information message
-function showInformation(message, callback) {
+function showInformation(message, buttonMsg, callback) {
     const infoElem = document.createElement('div');
     infoElem.classList.add('information');
     infoElem.innerHTML = `
-        <span>${message}</span>
-        <button class="info-btn">Ok</button>
+    <span>${message}</span>
+    <button class="info-btn">${buttonMsg}</button>
+    <button class="close-btn">&times;</button>
     `;
     document.body.appendChild(infoElem);
     infoElem.querySelector('.info-btn').addEventListener('click', () => {
         infoElem.remove();
         if (callback) callback();
+    });
+    infoElem.querySelector('.close-btn').addEventListener('click', () => {
+        infoElem.remove();
     });
 }
 
@@ -59,10 +63,17 @@ function insertTable(data) {
     var thead = `<thead><tr><th>PC NAME</th><th>IP Address</th><th>UPDATED ON</th></tr></thead>`;
     var tbody = '<tbody>';
     data.forEach(function (row) {
+        const date = new Date(row.update_time);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const year = String(date.getFullYear()).slice(-2); // Get last two digits of the year
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
         tbody += `<tr>
             <td>${row.pc_name}</td>
             <td>${row.ip_address}</td>
-            <td>${row.update_time}</td>
+            <td>${hours}:${minutes} ${day}/${month}/${year}</td>
         </tr>`;
     });
     tbody += '</tbody>';
@@ -81,7 +92,8 @@ function handleSubmit(event) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'api/fetch.php', true);
     xhr.onload = function () {
-        if (xhr.status === 200) {
+        var xhrStatus = xhr.status;
+        if (xhrStatus === 200) {
             var response = JSON.parse(xhr.responseText);
 
             if (response.status === 'success') {
@@ -119,8 +131,10 @@ function handleSubmit(event) {
                 document.getElementById('c1').focus();
                 pinChanged();
             }
+        } else if (xhrStatus === 405) {
+            showAlert('Please use the IITK URL to access this page');
         } else {
-            showAlert('An error occurred during the request.');
+            showAlert('An error occurred during the request');
         }
     };
     xhr.send(formData);
@@ -189,12 +203,11 @@ window.onload = function () {
     document.getElementById('login-form').addEventListener('submit', handleSubmit);
 }
 
-
 // Function to handle the Manual link click
 function handleManualClick(anchor) {
     showInformation(
-        'Access is restricted to INTENT Labs GitHub members only',
-        () => window.open('https://github.com/intentlab-iitk/manual', '_blank')
+        'Access is restricted to INTENT Labs GitHub members only', "continue",
+        () => window.open('https://github.com/intentlab-iitk/intentlab-manual', '_blank')
     );
     console.log('Manual is accessed')
 }
