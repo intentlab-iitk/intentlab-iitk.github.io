@@ -1,3 +1,4 @@
 logs/
 .vscode/
+*.local.creds.php
 public/assets/manual.pdf

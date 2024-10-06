@@ -1,7 +1,15 @@
 <?php
 // Include the configuration files
-require 'database.creds.php';
-require 'config.creds.php';
+if (file_exists('config.local.creds.php')) {
+    require 'config.local.creds.php'; // Use Local credentials, not tracked by Git
+} else {
+    require 'config.creds.php'; // Use Repo credential, tracked by Git
+}
+if (file_exists('database.local.creds.php')) {
+    require 'database.local.creds.php'; // Use Local credentials, not tracked by Git
+} else {
+    require 'database.creds.php'; //  Use Repo credential, tracked by Git
+}
 
 // Create a connection to the database
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
