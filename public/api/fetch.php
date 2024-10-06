@@ -24,7 +24,7 @@ $sql = $conn->prepare("
     SELECT passwd 
     FROM $passwordsTable 
     WHERE app = 'weblogin' 
-    AND username = 'root' 
+    AND username = 'admin' 
 ");
 
 $sql->execute();
@@ -43,8 +43,7 @@ if ($result->num_rows > 0) {
         $sql = $conn->prepare("
             SELECT pc_name, ip_address, update_time 
             FROM $ipTable 
-            ORDER BY update_time ASC 
-        ");
+            ORDER BY update_time DESC");
         $sql->execute();
         $result = $sql->get_result();
 

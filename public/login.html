@@ -13,6 +13,7 @@
     <!-- INTENT Labs -->
     <title>INTENT Labs</title>
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/login.css">
 </head>
@@ -20,9 +21,12 @@
 <body>
 
     <header id="myHeader">
+        <div class="lab-name">INTENT Labs</div>
         <nav id="navbar">
             <div id="navAnchorBox">
-                <a class="postLoginHeader" style="display: none;" href="assets/manual.pdf">Manual</a>
+                <a id="creds-link" class="postLoginHeader" style="display: none;" href="assets/manual.pdf">Creds</a>
+                <a id="manual-link" class="postLoginHeader" style="display: none;" href="javascript:void(0);"
+                    onclick="handleManualClick();">Manual</a>
                 <a class="postLoginHeader" style="display: none;"><Span></Span></a>
                 <a href="index.html">Home</a>
             </div>
@@ -33,16 +37,33 @@
         <div id="particles-js" class="particles"></div>
         <section id="login-section">
             <form id="login-form">
-                <h1>INTENT Labs</h1>
-                <div id="right-password">Access Granted</div>
-                <div id="wrong-password">Incorrect Password</div>
-                <input type="text" id="password" name="password" maxlength="4" required pattern="[A-Za-z0-9]{4}"
-                    placeholder="Enter 4-digit PIN">
-                <button type="submit" class="custom-btn">Login</button>
+                <!-- <h1>INTENT Labs</h1> -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <div id="securityCode">Security PIN</div>
+                            <input id="pin" aria-labelledby="securityCode" aria-describedby="securityCodeHint"
+                                class="form-control input-hidden mt-2" type="text" maxlength="4" onfocus="pinFocused()"
+                                oninput="pinChanged()" onblur="pinUnfocused()">
+                            <div class="d-flex inputs-visible mb-3 mt-3" aria-hidden="true">
+                                <input id="c1" tabindex="-1" class="form-control" type="text" maxlength="1"
+                                    onfocus="focusHiddenInput()">
+                                <input id="c2" tabindex="-1" class="form-control" type="text" maxlength="1"
+                                    onfocus="focusHiddenInput()">
+                                <input id="c3" tabindex="-1" class="form-control" type="text" maxlength="1"
+                                    onfocus="focusHiddenInput()">
+                                <input id="c4" tabindex="-1" class="form-control" type="text" maxlength="1"
+                                    onfocus="focusHiddenInput()">
+                            </div>
+                            <span id="securityCodeHint">Enter 4-digit PIN</span>
+                            <button class="btn btn-primary btn-block mt-3">Login</button>
+                        </div>
+                    </div>
+                </div>
             </form>
         </section>
-        <section id="table-container" style="display:none;">
-        </section>
+        <section id="table-container" style="display:none;"></section>
+        <section id="creds-container" style="display:none;"></section>
     </main>
 
     <footer id="footer">

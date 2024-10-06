@@ -1,4 +1,3 @@
 logs/
 .vscode/
-*.creds.php
 public/assets/manual.pdf

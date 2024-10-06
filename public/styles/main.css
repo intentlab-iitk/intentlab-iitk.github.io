@@ -72,13 +72,17 @@ section h1 {
 }
 
 
-/* Header */
+/* Header  */
 header {
   z-index: 9999;
   position: fixed;
   padding: 0 20px;
   top: 0;
   right: 0;
+}
+
+.lab-name {
+  display: none;
 }
 
 /* Navigation Bar */

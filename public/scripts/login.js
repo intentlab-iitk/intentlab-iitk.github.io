@@ -1,28 +1,101 @@
+/**************************
+* Login Page forntend js
+**************************/
+
 particlesJS.load('particles-js', 'assets/particles.json', function () {
-    console.log('Particles.js loaded');
+    console.log('Login page loaded');
 });
 
 var wrongPasswordElem = document.getElementById('wrong-password');
 var rightPasswordElem = document.getElementById('right-password');
+var securityCodeElem = document.getElementById('securityCodeHint');
 
+// Function to display alert message
+function showAlert(message) {
+    alert(message);
+}
+
+// Function to display notification message
+function showNotification(message, delay) {
+    const notificationElem = document.createElement('div');
+    notificationElem.classList.add('notification');
+    notificationElem.innerHTML = `
+        <span>${message}</span>
+        <button class="close-btn">&times;</button>
+    `;
+    document.body.appendChild(notificationElem);
+    setTimeout(() => {
+        notificationElem.classList.add('fade-out');
+        setTimeout(() => {
+            notificationElem.remove();
+        }, 500);
+    }, delay);
+    notificationElem.querySelector('.close-btn').addEventListener('click', () => {
+        notificationElem.remove();
+    });
+}
+
+// Function to display information message
+function showInformation(message, callback) {
+    const infoElem = document.createElement('div');
+    infoElem.classList.add('information');
+    infoElem.innerHTML = `
+        <span>${message}</span>
+        <button class="info-btn">Ok</button>
+    `;
+    document.body.appendChild(infoElem);
+    infoElem.querySelector('.info-btn').addEventListener('click', () => {
+        infoElem.remove();
+        if (callback) callback();
+    });
+}
+
+// Function to insert IP table
+function insertTable(data) {
+    var tableContainer = document.getElementById('table-container');
+    var table = document.createElement('table');
+    table.className = 'pc-info-table';
+
+    var thead = `<thead><tr><th>PC NAME</th><th>IP Address</th><th>UPDATED ON</th></tr></thead>`;
+    var tbody = '<tbody>';
+    data.forEach(function (row) {
+        tbody += `<tr>
+            <td>${row.pc_name}</td>
+            <td>${row.ip_address}</td>
+            <td>${row.update_time}</td>
+        </tr>`;
+    });
+    tbody += '</tbody>';
+
+    table.innerHTML = thead + tbody;
+    tableContainer.appendChild(table);
+}
+
+// Function to handle pin
 function handleSubmit(event) {
     event.preventDefault();
-    var formData = new FormData(event.target);
+    var pin = getPin();
+    var formData = new FormData();
+    formData.append('password', pin);
+
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'php/fetch_data.php', true);
+    xhr.open('POST', 'api/fetch.php', true);
     xhr.onload = function () {
         if (xhr.status === 200) {
             var response = JSON.parse(xhr.responseText);
 
-            wrongPasswordElem.style.opacity = '0';
-            rightPasswordElem.style.opacity = '0';
-
             if (response.status === 'success') {
-                console.log('Authentication Success, token stored');
-                rightPasswordElem.style.display = 'block';
-                rightPasswordElem.style.opacity = '1';
+                console.log('Authentication Success');
+                securityCodeElem.innerText = 'Access Granted';
+                securityCodeElem.style.opacity = '1';
                 setTimeout(function () {
-                    // Insert the table with the data
+                    securityCodeElem.style.opacity = '0';
+                    setTimeout(function () {
+                        securityCodeElem.style.opacity = '1';
+                    }, 500);
+                    document.getElementById('pin').value = '';
+                    document.getElementById('c1').focus();
+                    pinChanged();
                     document.getElementById('login-section').style.display = 'none';
                     document.getElementById('table-container').style.display = 'flex';
                     const postLogin = document.querySelectorAll('.postLoginHeader');
@@ -30,18 +103,21 @@ function handleSubmit(event) {
                         container.style.display = 'block';
                     });
                     insertTable(response.data);
+                    window.scrollBy(0, -1000);
                 }, 500);
             } else {
-                wrongPasswordElem.style.display = 'block';
-                wrongPasswordElem.style.opacity = '1';
+                securityCodeElem.innerText = 'Incorrect Password';
+                securityCodeElem.style.opacity = '1';
                 setTimeout(function () {
-                    wrongPasswordElem.style.opacity = '0';
+                    securityCodeElem.style.opacity = '0';
                     setTimeout(function () {
-                        wrongPasswordElem.style.display = 'none';
+                        securityCodeElem.innerText = 'Enter 4-digit PIN';
+                        securityCodeElem.style.opacity = '1';
                     }, 500);
                 }, 1000);
-                document.getElementById('password').value = '';
-                document.getElementById('password').focus();
+                document.getElementById('pin').value = '';
+                document.getElementById('c1').focus();
+                pinChanged();
             }
         } else {
             showAlert('An error occurred during the request.');
@@ -50,71 +126,75 @@ function handleSubmit(event) {
     xhr.send(formData);
 }
 
-function insertTable(data) {
-    var tableContainer = document.getElementById('table-container');
-    var table = document.createElement('table');
-    table.className = 'pc-info-table';
 
-    var thead = document.createElement('thead');
-    var headerRow = document.createElement('tr');
-
-    var columns = ['PC NAME', 'IP Addr', 'UPDATED ON'];
-    columns.forEach(function (col) {
-        var th = document.createElement('th');
-        th.textContent = col;
-        headerRow.appendChild(th);
-    });
-
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
-
-    var tbody = document.createElement('tbody');
-    data.forEach(function (row) {
-        var tr = document.createElement('tr');
-        var pcNameTd = document.createElement('td');
-        var ipAddrTd = document.createElement('td');
-        var lastUpdateTd = document.createElement('td');
-
-        pcNameTd.textContent = row.pc_name;
-        ipAddrTd.textContent = row.ip_address;
-        lastUpdateTd.textContent = row.update_time;
-
-        tr.appendChild(pcNameTd);
-        tr.appendChild(ipAddrTd);
-        tr.appendChild(lastUpdateTd);
-
-        tbody.appendChild(tr);
-    });
-
-    table.appendChild(tbody);
-    tableContainer.appendChild(table);
+// Function to update visible inputs with asterisks, 
+// when the hidden input changes
+function pinChanged() {
+    const pin = getPin();
+    for (let i = 1; i <= 4; i++) {
+        document.getElementById("c" + i).value = i <= pin.length ? "*" : "";
+    }
+    pinFocused();
 }
 
+// Function to focus on the correct visible input
+function pinFocused() {
+    const pin = getPin();
+    const focusIndex = pin.length; // Index from 0 to 3
 
-function fetchPCInfo() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'php/fetch_pc_info.php', true);
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            var response = JSON.parse(xhr.responseText);
-            if (response.status === 'success') {
-                insertTable(response.data);
-            } else {
-                showAlert('Failed to fetch PC information.');
-            }
-        } else {
-            showAlert('An error occurred during the request.');
+    pinUnfocused(); // Remove focus from all inputs
+
+    if (focusIndex >= 0 && focusIndex < 4) {
+        const cId = "c" + (focusIndex + 1);
+        const focusedElement = document.getElementById(cId);
+        if (focusedElement) {
+            focusedElement.classList.add("focus");
         }
-    };
-    xhr.send();
+    }
 }
 
-function showAlert(message) {
-    alert(message);
+// Function to remove focus from all visible inputs
+function pinUnfocused() {
+    ["c1", "c2", "c3", "c4"].forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.classList.remove("focus");
+        }
+    });
 }
 
-// On window load
+// Function to get the hidden input value
+function getPin() {
+    let pin = document.getElementById("pin").value;
+    if (pin.length >= 4) {
+        pin = pin.substr(0, 4);
+    }
+    return pin;
+}
+
+// Function to focus on the hidden input when visible inputs are clicked on
+function focusHiddenInput() {
+    document.getElementById('pin').focus();
+}
+
+// On window load, add event listeners
 window.onload = function () {
-    document.getElementById('password').focus();
+    if (window.innerWidth >= 640) {
+        document.getElementById('pin').focus();
+    } else {
+        document.getElementById('pin').addEventListener('focus', function () {
+            window.scrollBy(0, 1000);
+        });
+    }
     document.getElementById('login-form').addEventListener('submit', handleSubmit);
-};
+}
+
+
+// Function to handle the Manual link click
+function handleManualClick(anchor) {
+    showInformation(
+        'Access is restricted to INTENT Labs GitHub members only',
+        () => window.open('https://github.com/intentlab-iitk/manual', '_blank')
+    );
+    console.log('Manual is accessed')
+}
