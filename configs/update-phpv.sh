@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NGINX_CONF="/etc/nginx/sites-available/BlackBox.conf"
+NGINX_CONF="/etc/nginx/sites-available/LabSite.conf"
 
 # Detect the PHP-FPM version
 PHP_FPM_VERSION=$(ls /var/run/php/ | grep -oP 'php[0-9.]+-fpm.sock' | sort -r | head -n 1)
