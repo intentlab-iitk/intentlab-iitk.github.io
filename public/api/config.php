@@ -1,5 +1,0 @@
-<?php
-// Config Creds
-define('DB_PASSWD_TABLE', 'DEFINE_PASSWORDS_TABLE_NAME');
-define('DB_IP_TABLE', 'DEFINE_IP_LOGS_TABLENAME');
-?>

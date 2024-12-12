@@ -5,24 +5,19 @@ if (file_exists('config.creds.php')) {
 } else {
     require 'config.php'; // Use Repo credential, tracked by Git
 }
-if (file_exists('database.creds.php')) {
-    require 'database.creds.php'; // Use Local credentials, not tracked by Git
-} else {
-    require 'database.php'; //  Use Repo credential, tracked by Git
-}
 
 // Create a connection to the database
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+// Define the table names
+$passwordsTable = 'passwds';
+$ipTable = 'iplog';
 
 // Check connection
 if ($conn->connect_error) {
     echo json_encode(['status' => 'error', 'message' => 'Connection failed']);
     exit();
 }
-
-// Define the table names
-$passwordsTable = DB_PASSWD_TABLE;
-$ipTable = DB_IP_TABLE;
 
 // Get the JSON data from the request body
 $input = file_get_contents('php://input');
