@@ -108,11 +108,33 @@ This repo contains code base for intentlab's website.
    ```
    The default password is set as `1234`.
 
+# Instructions for encrypted pdf
+
+To generate a PDF from a LaTeX file in Linux, you can use the `pdflatex` command. Here's how:
+
+1. **Install TeX Distribution** (if not already installed):
+   - For Ubuntu/Debian:
+
+     ```bash
+     sudo apt update
+     sudo apt install texlive-latex-base texlive-latex-extra texlive-fonts-recommended pdftk
+     ```
 
 
+2. **Compile the LaTeX File**:
+   - Navigate to the creds and compile pdf
 
+     ```bash
+     cd creds
+     pdflatex passwds.creds.tex
+     ```  
 
+   - Inside creds itself run encryptpdf script and exit back
 
+     ```bash
+     sudo chmod +x encryptpdf.sh && sudo ./encryptpdf.sh
+     cd ..
+     ```
 
 
 

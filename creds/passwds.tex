@@ -1,0 +1,73 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}  % For better table rules
+\usepackage{array}     % For column definitions
+\usepackage{geometry}  % To adjust the page margins
+\usepackage{lscape}    % For landscape tables (if needed)
+
+\title{\textbf{Credentials List}}
+\author{INTENT LABs}
+\date{}
+
+% Set the left and right margins to be equal
+\geometry{left=0.3in, right=0.3in, top=0in, bottom=1in}
+
+\begin{document}
+\maketitle
+
+% Place the table at the top of the page
+\begin{table}[ht]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{c|c|c|c|c}
+    \textbf{Application} &
+      \textbf{Location} &
+      \textbf{User} &
+      \textbf{Password} &
+      \textbf{Note} \\ \hline \hline
+    System Login &
+      RAMANUJAN-PC &
+      adminuser &
+      securepass@123 &
+      \begin{tabular}[c]{@{}c@{}}Root User\\ (Highest Privilege)\end{tabular} \\ \hline
+    System Login &
+      \begin{tabular}[c]{@{}c@{}}RAMANUJAN-PC \&\\ KEPRAKAR-PC\end{tabular} &
+      labadmin &
+      strongpass@456 &
+      \begin{tabular}[c]{@{}c@{}}Admin User\\ (sudoer)\end{tabular} \\ \hline
+    System Login &
+      \begin{tabular}[c]{@{}c@{}}RAMANUJAN-PC \&\\ KEPRAKAR-PC\end{tabular} &
+      labguest &
+      guestpass@789 &
+      \begin{tabular}[c]{@{}c@{}}Standard User\\ (non-sudoer)\end{tabular} \\ \hline
+    \begin{tabular}[c]{@{}c@{}}MySQL\\ Database\end{tabular} &
+      RAMANUJAN-PC &
+      dbadmin &
+      mysqlroot@123 &
+      \begin{tabular}[c]{@{}c@{}}Administrative\\ (Local Only)\end{tabular} \\ \hline
+    \begin{tabular}[c]{@{}c@{}}MySQL\\ Database\end{tabular} &
+      RAMANUJAN-PC &
+      dbserver &
+      mysqlserver@456 &
+      \begin{tabular}[c]{@{}c@{}}Administrative\\ (Remote enabled)\end{tabular} \\ \hline
+    \begin{tabular}[c]{@{}c@{}}MySQL\\ Database\end{tabular} &
+      RAMANUJAN-PC &
+      dbguest &
+      mysqlguest@789 &
+      \begin{tabular}[c]{@{}c@{}}DB Access only\\ (Remote enabled)\end{tabular} \\ \hline
+    Web Login &
+      RAMANUJAN-PC &
+      NA &
+      webaccess@408 &
+      intentlab.example.com
+    \end{tabular}
+\end{table}
+
+\section*{Disclaimer}
+\begin{itemize}
+    \item This document contains sensitive information and must be used solely for its intended purpose.
+    \item Do not download this PDF or disclose its contents to unauthorized individuals.
+    \item The \textbf{labadmin} account is reserved for lab members only. For others, provide the \textbf{labguest} account.
+\end{itemize}
+
+\end{document}

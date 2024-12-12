@@ -1,6 +1,3 @@
 logs/
 .vscode/
-creds/
-*.local.creds.php
-*.creds.php
-*.creds.pdf
+*.creds.*

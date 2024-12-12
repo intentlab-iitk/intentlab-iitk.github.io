@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Default parameters
-password_file="creds/encryptpdf.creds.txt"
-input_pdf="creds/passwds.creds.pdf"
-output_pdf="docs/assets/passwds.creds.pdf"
+password_file="encryptpdf.creds.txt" # Change accordingly
+input_pdf="passwds.creds.pdf" # Change acccordingly
+output_pdf="../docs/assets/passwds.creds.pdf"
 
 # Check if the password file exists
 if [[ ! -f "$password_file" ]]; then
