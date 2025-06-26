@@ -207,7 +207,7 @@ window.onload = function () {
 function handleManualClick(anchor) {
     showInformation(
         'Access is restricted to INTENT Labs GitHub members only', "continue",
-        () => window.open('https://github.com/intentlab-iitk/intentlab-manual', '_blank')
+        () => window.open('https://github.com/intentlabiitk/intentlabmanual', '_blank')
     );
     console.log('Manual is accessed')
 }
