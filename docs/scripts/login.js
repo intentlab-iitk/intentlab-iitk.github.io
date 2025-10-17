@@ -132,7 +132,7 @@ function handleSubmit(event) {
                 pinChanged();
             }
         } else if (xhrStatus === 405) {
-            showAlert('Please use the IITK URL to access this page');
+            showAlert('Please use the http://intentlab.iitk.ac.in to access this page');
         } else {
             showAlert('An error occurred during the request');
         }
@@ -207,7 +207,7 @@ window.onload = function () {
 function handleManualClick(anchor) {
     showInformation(
         'Access is restricted to INTENT Labs GitHub members only', "continue",
-        () => window.open('https://github.com/intentlabiitk/intentmanual', '_blank')
+        () => window.open('https://github.com/intentlab-iitk/intentmanual', '_blank')
     );
     console.log('Manual is accessed')
 }
